@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs {{tabset.newvar}}" >
+	<li class='' ng-repeat="tab in tabset.tabs" >
+		<a href="" ng-click="tabset.click(tab);resetInput();" ng-class='{"{{tabset.activestyle}}":tab.active,"{{tabset.inactivestyle}}":tab.active === false}'> {{tab.heading}}</a>
+	</li>
+</ul>
+
+<ng-transclude>
+</ng-transclude>

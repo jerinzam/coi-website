@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+  <head>
+    <title>COi</title> 
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap-select.css">
+  	
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	
+  	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-animate.min.js"></script>
+  	<script type="text/javascript" src="/partials/img-slider/imgSliderDirective.js"></script>
+  	<script type="text/javascript" src="/partials/courses/coursesDirective.js"></script>
+  	<script type="text/javascript" src="main.js"></script>
+  	
+	<link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+
+  <body ng-controller="mainctrl">
+ 
+  	<fixed-header>
+
+  	</fixed-header>
+
+
+  	<!-- carousel -->
+  	<image-slider>
+  	<div class="container inside-slider">
+	  	<div>
+	  		<!-- <user-options>
+	  		</user-options> -->
+	  	</div>
+	</div>
+  	</image-slider>
+	<!-- end-carousel -->
+
+	<div id="bottom"></div>
+
+	<br><br><br>
+	<div class="container">
+		<div class=" course-set col-xs-offset-1  " ng-show = detailshide >
+
+			
+
+			<div class="row border-tria  " >
+				
+				<div class="col-md-7 col-xs-offset-1  ">
+					<h1 class="text-center border-side ">
+				        <span>Popular Courses</span>    </h1> 
+				</div>	
+				<br><br><br>
+				
+				<!-- <div class="slider slider1 border-trial"  ng-show="slider===1" >SLIDE2</div>
+				<div class="slider slider2 border-trial"  ng-show="slider===0">SLIDE1</div> -->
+
+				<div class = "msg-pallette well text-center">
+				<p  ng-hide="inputvalue.length || inputvalue2.length || fd">
+					You are looking at all courses available in CAREER OBJECTIVE INSTITUTE
+				</p>
+				<p ng-show="inputvalue.length || inputvalue2.length || fd">
+					You are searching for
+					<span ng-show="inputvalue.length === 0">
+						all
+					</span> 
+					<span ng-show="inputvalue2.length != 0 ">
+						<span ng-repeat="x in inputvalue2">
+							<b>{{x}}</b><span ng-if='inputvalue2.length > 1 && ($index+1) != inputvalue2.length'>,</span>
+						</span>
+						level
+					</span>    
+					courses 
+					<span ng-show="inputvalue.length">
+						in <span ng-repeat="course in inputvalue"><b>{{course}}</b><span ng-if='inputvalue.length > 1 && ($index+1) != inputvalue.length'>,</span>
+					</span> 
+					</span>
+					
+					<span ng-if="fd"> 
+						for batches starting 
+						<span >	
+							<span ng-if="after" >
+								after
+							</span> 
+							<span ng-if="before" >
+								before
+							</span>
+							<span ng-if="between" >
+								between
+							</span>
+							<b>{{fd | date:mediumDate}}</b>
+							<span ng-if="between" >
+								and <b>{{td | date:mediumDate}}</b>
+							</span>
+						</span> 
+					</span>
+				</p>
+			</div>
+
+				<course-library detailshider = detailshide ></course-library>
+
+
+				<div id='fiterdiv' class="col-sm-2  border-tria  filter-box ">
+					<p>
+						<span class="t-size-18">
+							Show Courses for:<br>
+						</span>
+					</p>
+					<select ng-change="gotoTop();" class="selectpicker courses-picker "
+					  multiple ng-model="inputvalue" >
+					  <option>Java</option>
+					  <option>Python</option>
+					  <option>NodeJS</option>
+				  	</select>
+				  	
+				  	<br><br>
+				  	<p>
+						<span class="t-size-18">
+							Level: <br>	
+						</span>
+					</p>
+					<button ng-click="levelChooser('Beginner');gotoTop();" ng-model="levelB" type="button" class="btn btn-xs  btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
+						  Beginner
+					</button>
+					<button ng-click="levelChooser('Intermediate');gotoTop();" ng-model="levelB" type="button" class="btn btn-xs btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
+						 Intermediate
+					</button>
+					<button ng-click="levelChooser('Advanced');gotoTop();" ng-model="levelB" type="button" class="btn btn-xs btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
+						  Advanced
+					</button>
+					<br><br>
+					<p>
+						<span class="t-size-18">
+							Starting:<br>	
+							
+						</span>
+					</p>
+					&nbsp
+
+					<input type="checkbox" ng-model="after" ng-click="gotoTop();before=false;between=false;resetter();fd='';filterType='after'" />
+
+					    After
+					   &nbsp
+			        <input type="checkbox" ng-model="before" ng-click="gotoTop();after=false;between=false;resetter();fd='';filterType='before'" />
+
+					    Before
+					    &nbsp
+			        <input type="checkbox" ng-model="between" ng-click="gotoTop();after=false;before=false;resetter();fd='';td='';filterType='between'" />
+
+					    Between
+					    <br>
+					     <br>	
+					     <div class="after" ng-show="after" >
+					        				      
+					        <div class=" mine" ng-controller="DatepickerDemoCtrl">
+					            <p class="input-group">
+					              <input ng-init="fromDate=''" ng-change="dateValue(fromDate)" ng-model="fromDate " type="text"  date-parser="shortDate" class="form-control" datepicker-popup="{{format}}"  is-open="opened1" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  show-button-bar="false"  />
+					              <span class="input-group-btn">
+					                <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+					              </span>
+					            </p>
+					        </div>				         
+					    </div>
+					    <div class="after" ng-show="before">
+					        <div class=" mine" ng-controller="DatepickerDemoCtrl">
+						            <p class="input-group">
+						              <input ng-init="fromDate=''" ng-change="dateValue(fromDate)" ng-model="fromDate " type="text"  date-parser="shortDate" class="form-control" datepicker-popup="{{format}}"  is-open="opened1" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  show-button-bar="false"  />
+						              <span class="input-group-btn">
+						                <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+						              </span>
+						            </p>
+						    </div>	
+					    </div>
+					    <div class="after" ng-show="between">
+					        <div class=" mine" ng-controller="DatepickerDemoCtrl">
+						            <p class="input-group">
+						              <input ng-init="fromDate=''" ng-model="fromDate " type="text"  date-parser="shortDate" class="form-control" datepicker-popup="{{format}}"  is-open="opened1" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  show-button-bar="false"  />
+						              <span class="input-group-btn">
+						                <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+						              </span>
+						            </p>
+						    
+						    <p><span class="text-center">to</span></p>
+						   
+						            <p class="input-group" >
+						              <input ng-init="fromDate=''" ng-change="dateValue(fromDate,toDate)" ng-model="toDate " type="text"  date-parser="shortDate" class="form-control" datepicker-popup="{{format}}"  is-open="opened2" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"  show-button-bar="false" ng-disabled="!fromDate" />
+						              <span class="input-group-btn">
+						                <button type="button" class="btn btn-default" ng-click="open($event,'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+						              </span>
+						            </p>
+						    </div>	
+					    </div>
+
+					
+
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div class=" container courseDetailContainer border-tria two-side-shadow " ng-show = !detailshide>
+
+		<a href="" ng-click = detailshider(true) >
+							<span class="glyphicon glyphicon-remove-circle pull-right"></span>
+		</a>
+		<div class="row ">
+
+			<div class="col-sm-3 border-tria box-left">
+				
+				<div class="col-xs-12 courseImg">
+					<img class="img-responsive " ng-src="./images/{{selectedCourse.coursePictureMain}}"/>
+					
+				</div>
+				<div class="col-xs-12">
+					<hr>
+				</div>				
+					
+				<div class="col-xs-12 ">
+					<table class="customTable col-xs-12">
+					<tr >
+						<td width="42%" class="pad-bot pad-left-35 pad-right-0 text-left">
+							Course 
+						</td>
+						<td  class=" pad-bot">
+						 	:<span class="t-white t-size-18"> {{selectedCourse.courseName}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td  width="42%" class="pad-bot pad-left-35 pad-right-0 text-left ">Level </td>
+						<td  class=" pad-bot"><span class="t-white	 t-size-15">: Intermediate</span></td>
+					</tr>	
+					
+					</table>
+				</div>	
+			</div>
+			<div class="col-sm-7 border-tria box-middle">
+						
+				<tabset2 newvar        = "courseTab" 
+						activestyle   = 'courseActiveTab'
+						inactivestyle = 'courseInactiveTab'>
+					<tab2 heading="Description">
+						<div class="courseDetailTab">
+							<p class="description-text">{{selectedCourse.courseDescription}}</p>
+						</div>
+					</tab2>
+					<tab2 heading="Curriculum">
+						<div class="courseDetailTab">	
+							{{selectedCourse.courseCurriculum}}
+						</div>	
+					</tab2>
+					<tab2 heading="Upcoming Batches">
+						<div class="courseDetailTab">
+							<p class="description-text">{{selectedCourse.upcomingBatches}}</p>
+						</div>
+					</tab2>
+					<tab2  heading="After this, what?">	
+						<div class="courseDetailTab">
+						
+						{{selectedCourse.courseAfter}}
+						</div>
+					</tab2>
+				</tabset2>
+
+
+			</div>
+			<div class="col-sm-2 border-tria box-right	">
+				<tabset2 newvar        = "courseTab" 
+						activestyle   = 'courseActiveTab'
+						inactivestyle = 'courseInactiveTab'>
+					<tab2 heading="Query">
+						<div class="box-right-content">
+							<form>
+							  <div class="form-group query-name pull-left">
+							   
+							    <input type="email" class="form-control"  placeholder="First Name">
+							    	<br>
+							    
+							  </div>
+							   <div class="form-group query-name pull-right">
+							    <input type="email" class="form-control" placeholder="Last Name">
+							    	<br>
+							   </div>
+							  <div class="form-group width-100">
+							   
+							    <input type="email" class="form-control" placeholder="Mobile Number">
+							    	<br>
+							    
+							  </div>		
+							  <div class="form-group width-100">
+							   
+							    <input type="email" class="form-control"  placeholder="Email">
+							    	<br>
+							    
+							  </div>
+							  <div class="form-group width-100 query-text">
+							   
+							    <textarea type="email" class="form-control"  placeholder="Your Query"></textarea>
+							    	<br>
+							     <button type="submit" class="btn btn-warning btn-block pull-right">Help <b>ME</b></button>
+							  </div>
+							 
+							</form>
+						</div>
+					</tab2>
+					<tab2 heading="Offers">	
+						<div class="box-right-content">
+							{{selectedCourse.courseOffers}}
+						</div>
+					</tab2>
+				</tabset2>
+			</div>
+		
+		</div>
+
+		<div class="courseDetailFooter effect6 ">
+			<div class="reviews border-tria col-sm-10">
+				<div class="row">
+				<div class="reviewer-info border-tria col-sm-9">
+					<p class="review-text">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					</p>
+					<p class="pull-right">- Senthil Kumar</p>
+				</div>
+				<img src="/images/python-img.png" alt="" class="img-circle user-img-size ">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+	<!-- footer -->
+	<footer> 
+		<hr>
+		<div class="container ">
+				<div class="row ">
+					<div class="col-sm-2 col-xs-6 t-size-11 footer">
+						<p><a href="" class="t-black t-style-bold">ABOUT</a></p>	
+						<p><a href="">Our Mission</a></p>
+						<p><a href="">Our Mission</a></p>
+						<p><a href="">Our Mission</a></p>
+					</div>
+					<div class="col-sm-2 col-xs-6   t-size-11 footer">
+						<p><a href="" class="t-black t-style-bold">CONTACT US</a></p>
+						<p><a href="">Contact</a></p><br>
+						<p><a href="" class="t-black t-style-bold">CAREER</a></p>
+						<p><a href="">Full Time</a></p>
+						<p><a href="">Internships</a></p>
+					</div>
+					<div class="col-sm-2 col-xs-6  t-size-11 footer">
+						<p><a href="" class="t-black t-style-bold">SCHEMES</a></p>
+						<p><a href="" class="t-size-11">Individual Plans</a></p>
+						<p><a href="" class="t-size-11">Business Plans</a></p>
+					</div>
+					<div class="col-sm-2 col-xs-6 col-lg-2 t-size-11 footer">
+						<p><a href="" class="t-black t-style-bold">SOCIAL</a></p>
+						<p><a href="">Facebook</a></p>
+						<p><a href="">Twitter</a></p>
+						<p><a href="">Blog</a></p>
+						
+					</div>
+					<div class="t-size-11 footer footer-input-container ">
+						
+						
+						<input type="email" placeholder="Leave your email" class="form-control form-control-footer"></input>
+						<p class="text-left"><a href="" class="t-grey t-size-13">We will reach out to you</a></p>
+					</div>
+
+				</div>
+				<hr>
+				<div class="footerBottom">
+					<span class="footer copyright">&copy 2015 Career Objective Institute
+					</span>
+					<span class="footer legal">Lorem ipsum dolor sit amet, consectetur</span>
+				</div>
+		</div>
+	</footer>				
+	<!-- end-footer -->
+	<script type="text/javascript" src="bootstrap-select.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.min.js"></script>
+	<script type="text/javascript" src="carousel.js"></script>
+  
+
+  </body>
+
+</html>

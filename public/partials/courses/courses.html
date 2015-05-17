@@ -1,0 +1,12 @@
+<div class="col-xs-6 col-sm-2 col-md-2   col-xs-offset-3 col-sm-offset-1 course-tile " ng-repeat="course in courses | inArray:inputvalue:'courseName' | inArray:inputvalue2:'courseLevel' | myfilter:fd:td:filterType:'batch'" >
+	
+	<div class="view view-first effect1">  
+	     <img ng-src="./images/{{course.coursePictureMain}}" class="img-responsive course-img " />  
+	     <div class="mask">  
+		     <h2>{{course.courseName}}</h2>  
+		     <p><span >Duration:2 weeks</span></p> 
+		     <p><span>Duration:5 hrs</span></p>  
+		     <a href="#bottom" class="info" ng-click="detailshider(false);courseDetail(course);">Read More</a>  
+	     </div>  
+	</div> 
+</div>
