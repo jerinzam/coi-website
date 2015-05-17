@@ -315,6 +315,12 @@ angular.module("myApp",['ui.bootstrap.carousel','ngAnimate','imgSliderDirective'
 
 .controller('mainctrl',function($scope,mySharedService,$window,$location,$anchorScroll,$interval){
 $scope.slider = 0 ;
+
+$scope.searcher = function(value){
+	$scope.inputvalue = [value];
+	$scope.searchValue = '';
+	console.log("I am  in searcher",$scope.inputvalue )
+}
  function slideChanger(){
 	console.log("I am in slide CHanger "+ $scope.slider )
 	$scope.slider = ($scope.slider + 1) % 2;
