@@ -206,7 +206,7 @@
 
 	<div  id="courseDetail" class=" container courseDetailContainer border-tria two-side-shadow " ng-show = !detailshide>
 
-		<a href="" ng-click = "detailshider(true);urlresetter();gotoTop('home');" >
+		<a href="" ng-click = "selectedCourse='';detailshider(true);urlresetter();gotoTop('home');slidestopper();" >
 							<span class="glyphicon glyphicon-remove-circle pull-right"></span>
 		</a>
 		<div   class="row ">
@@ -318,19 +318,27 @@
 		
 		</div>
 
-		<div  class="courseDetailFooter effect6 ">
+		<div   class="courseDetailFooter effect6 ">
 			<div class="reviews border-tria col-sm-10">
-				<div class="row">
-				<div class="reviewer-info border-tria col-sm-9">
-					<p class="review-text">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					</p>
-					<p class="pull-right">- Senthil Kumar</p>
-				</div>
-				<img src="/images/python-img.png" alt="" class="img-circle user-img-size ">
+			
+				
+				
+				<div class="row reviewContent" ng-repeat="review in reviews" ng-show="slider=== $index && selectedCourse.courseName === name">
+					<div class="reviewer-info border-tria col-sm-9">
+						<p class="review-text">
+							{{slider}}{{selectedCourse.reviews['length']}}{{review.comment}}
+						</p>
+						<p class="pull-right">- {{review.author}}</p>
+					</div>
+					<img src="/images/python-img.png" alt="" class="img-circle user-img-size ">
 					
 				</div>
+				 <!-- ng-click="slideChanger('forward')" -->
+				 <a href=""><span ng-click="slideChanger('forward');" class="badge  review-button review-next"><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span></span>
+				 </a>
+				 <a href="">
+				 <span ng-click="slideChanger('previous')" class="badge  review-button review-prev"><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span></span>
+				</a>
 			</div>
 		</div>
 	</div>

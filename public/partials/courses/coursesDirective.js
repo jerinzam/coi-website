@@ -36,6 +36,7 @@ angular.module('coursesDirective',[])
 						console.log("callback is success")
 						console.log(data)
 						scope.selectedCourse = data;
+						scope.reviews = scope.selectedCourse.reviews
 
 					})
 					

@@ -318,31 +318,74 @@ angular.module("myApp",['ui.bootstrap.carousel','ngAnimate','imgSliderDirective'
 })
 
 .controller('mainctrl',function($scope,mySharedService,$window,$location,$anchorScroll,$interval){
-$scope.slider = 0 ;
 
 $scope.searcher = function(value){
 	$scope.inputvalue = [value];
 	$scope.searchValue = '';
 	console.log("I am  in searcher",$scope.inputvalue )
 }
- function slideChanger(){
-	console.log("I am in slide CHanger "+ $scope.slider )
-	$scope.slider = ($scope.slider + 1) % 2;
-	
+$scope.slidestopper = function(){
+
+	$scope.name='';
+	$interval.cancel($scope.timer);
 }
-$interval(slideChanger,5000)
+$scope.slideChanger = function(type){
+ 	if(type === 'forward'){
+ 		console.log("in forward:"+$scope.slider)	
+ 		$scope.slider = $scope.slider + 1;
+ 		$interval.cancel($scope.timer);
+ 		$scope.timer = $interval($scope.slideChanger,5000)
 
-	$scope.gotoTop = function(location){
+ 	}else if(type === 'previous'){
+ 		if(!$scope.slider){
+ 			console.log("in previous if :"+$scope.slider)	
+ 			$scope.slider = $scope.selectedCourse.reviews["length"]-1;
+ 			console.log("in previous if after:"+$scope.slider)	
+ 		}else{	
+ 		console.log("in previous else :"+$scope.slider)	
+ 		$scope.slider = $scope.slider - 1;
+ 		console.log("in previous else after :"+$scope.slider)	
+ 		}
+ 		$interval.cancel($scope.timer);
+ 		$scope.timer = $interval($scope.slideChanger,5000)
+ 	}else {
+ 		if(($scope.slider + 1) <= 3)
+ 			{
+ 			console.log("no argument"+$scope.slider);
+ 				 $scope.slider = ($scope.slider + 1) 
+ 			}else{
+ 				console.log("no argument cond false"+$scope.slider);
+ 				$scope.slider = 0;
+ 			}
+ 		
+ 	}
+
+	// console.log($scope.selectedCourse.reviews["length"])
 		
-		console.log("in gotoTop"+$location.url());
-		$location.url('')
-		$location.hash(location);
-		$location.replace();
+			$scope.slider = ($scope.slider) % 3;	
 
-         console.log("in gotoTop"+$location.hash()+","+$location.url());
-        $anchorScroll();
+}
 
-	}
+$scope.slidestarter = function(x){
+	
+	$scope.name= x;
+	$scope.selectedCourse = '';
+	$scope.slider = 0 ;
+	$scope.slidestart = true;
+
+
+	$scope.timer = $interval($scope.slideChanger,5000)
+}
+$scope.gotoTop = function(location){
+	
+	console.log("in gotoTop"+$location.url());
+	$location.url('')
+	$location.hash(location);
+	$location.replace();
+
+     console.log("in gotoTop"+$location.hash()+","+$location.url());
+    $anchorScroll();
+}
 angular.element($window).bind("scroll",function() {
 
 	var y=$(this).scrollTop();
@@ -352,24 +395,25 @@ angular.element($window).bind("scroll",function() {
 	else
     $('.container .row .filter-box').stop().animate({'marginTop':0},500);
 
-});
-	$scope.filterType="after";
-	$scope.resetter = function(){
-		console.log('in resetter')
-		mySharedService.prepForBroadcast();
-		$scope.fd = '';
-	}
-	// var testCtrl = $controller('DatepickerDemoCtrl')
-	$scope.dateValue = function(x,y){
-		
-			$scope.td=y
-		
-			$scope.fd=x	
-		
-		console.log("Chosen date value is");
-		console.log($scope.fd);
+})
 
-	}
+$scope.filterType="after";
+$scope.resetter = function(){
+	console.log('in resetter')
+	mySharedService.prepForBroadcast();
+	$scope.fd = '';
+}
+
+$scope.dateValue = function(x,y){
+	
+		$scope.td = y
+	
+		$scope.fd = x	
+	
+	console.log("Chosen date value is");
+	console.log($scope.fd);
+
+ }
 	
 	$scope.detailshide = true;
 	$scope.detailshider = function(detailshide){
