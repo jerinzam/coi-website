@@ -111,7 +111,7 @@
 							Show Courses for:<br>
 						</span>
 					</p>
-					<select ng-change="gotoTop();" class="selectpicker courses-picker "
+					<select ng-change="gotoTop('home');" class="selectpicker courses-picker "
 					  multiple ng-model="inputvalue" >
 					  <option>Java</option>
 					  <option>Python</option>
@@ -124,13 +124,13 @@
 							Level: <br>	
 						</span>
 					</p>
-					<button ng-click="levelChooser('Beginner');gotoTop();" ng-model="levelB" type="button" class="btn btn-xs  btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
+					<button ng-click="levelChooser('Beginner');gotoTop('home');" ng-model="levelB" type="button" class="btn btn-xs  btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
 						  Beginner
 					</button>
-					<button ng-click="levelChooser('Intermediate');gotoTop();" ng-model="levelB" type="button" class="btn btn-xs btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
+					<button ng-click="levelChooser('Intermediate');gotoTop('home');" ng-model="levelB" type="button" class="btn btn-xs btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
 						 Intermediate
 					</button>
-					<button ng-click="levelChooser('Advanced');gotoTop();" ng-model="levelB" type="button" class="btn btn-xs btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
+					<button ng-click="levelChooser('Advanced');gotoTop('home');" ng-model="levelB" type="button" class="btn btn-xs btn-transparent" data-toggle="button" aria-pressed="false" autocomplete="off">
 						  Advanced
 					</button>
 					<br><br>
@@ -142,15 +142,15 @@
 					</p>
 					&nbsp
 
-					<input type="checkbox" ng-model="after" ng-click="gotoTop();before=false;between=false;resetter();fd='';filterType='after'" />
+					<input type="checkbox" ng-model="after" ng-click="gotoTop('home');before=false;between=false;resetter();fd='';filterType='after'" />
 
 					    After
 					   &nbsp
-			        <input type="checkbox" ng-model="before" ng-click="gotoTop();after=false;between=false;resetter();fd='';filterType='before'" />
+			        <input type="checkbox" ng-model="before" ng-click="gotoTop('home');after=false;between=false;resetter();fd='';filterType='before'" />
 
 					    Before
 					    &nbsp
-			        <input type="checkbox" ng-model="between" ng-click="gotoTop();after=false;before=false;resetter();fd='';td='';filterType='between'" />
+			        <input type="checkbox" ng-model="between" ng-click="gotoTop('home');after=false;before=false;resetter();fd='';td='';filterType='between'" />
 
 					    Between
 					    <br>
@@ -206,7 +206,7 @@
 
 	<div  id="courseDetail" class=" container courseDetailContainer border-tria two-side-shadow " ng-show = !detailshide>
 
-		<a href="" ng-click = "detailshider(true);gotoTop('home');" >
+		<a href="" ng-click = "detailshider(true);urlresetter();gotoTop('home');" >
 							<span class="glyphicon glyphicon-remove-circle pull-right"></span>
 		</a>
 		<div   class="row ">

@@ -195,8 +195,8 @@ angular.module("myApp",['ui.bootstrap.carousel','ngAnimate','imgSliderDirective'
 		templateUrl:'/partials/fixed-header/fixed-header.html',
 		link:function(scope,elem,attr){
 			angular.element($window).bind("scroll", function() {
-				console.log($location.path() === '');
-				if($location.path() === ''){
+				console.log($location.path() === '' );
+				if($location.path() === '' | $location.hash() === 'home' ){
 
 		             if (this.pageYOffset <= 10) {
 		             	elem.removeClass('header-final');
@@ -332,18 +332,19 @@ $scope.searcher = function(value){
 }
 $interval(slideChanger,5000)
 
-angular.element($window).bind("scroll",function() {
-	$scope.urlresetter = function(loc){
-		console.log("in locresetter"+$location.url)
-		 $location.hash(loc);
-	}
 	$scope.gotoTop = function(location){
-		console.log("in gotoTop");
-		var old = $location.hash()
-		$location.hash('home');
+		
+		console.log("in gotoTop"+$location.url());
+		$location.url('')
+		$location.hash(location);
+		$location.replace();
+
+         console.log("in gotoTop"+$location.hash()+","+$location.url());
         $anchorScroll();
-        // $location.hash(old);
+
 	}
+angular.element($window).bind("scroll",function() {
+
 	var y=$(this).scrollTop();
      console.log("in teseter" +y) 
     if( y > 700)
