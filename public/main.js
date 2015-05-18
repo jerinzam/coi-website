@@ -189,21 +189,25 @@ angular.module("myApp",['ui.bootstrap.carousel','ngAnimate','imgSliderDirective'
 		}
 	}
 })
-.directive('fixedHeader',function($window){
+.directive('fixedHeader',function($window,$location){
 	return{
 		restrict:'E',
 		templateUrl:'/partials/fixed-header/fixed-header.html',
 		link:function(scope,elem,attr){
 			angular.element($window).bind("scroll", function() {
-	             if (this.pageYOffset <= 10) {
-	             	elem.removeClass('header-final');
-	                
-	                 console.log('Scrolled below header.');
-	             } else {
-	                  elem.addClass('header-final')
-	                 
-	                 console.log('Header is in view.');
-	             }
+				console.log($location.path() === '');
+				if($location.path() === ''){
+
+		             if (this.pageYOffset <= 10) {
+		             	elem.removeClass('header-final');
+		                
+		                 console.log('Scrolled below header.');
+		             } else {
+		                  elem.addClass('header-final')
+		                 
+		                 console.log('Header is in view.');
+		             }
+				}
         	});
 
 		}
@@ -329,10 +333,16 @@ $scope.searcher = function(value){
 $interval(slideChanger,5000)
 
 angular.element($window).bind("scroll",function() {
-	$scope.gotoTop = function(){
+	$scope.urlresetter = function(loc){
+		console.log("in locresetter"+$location.url)
+		 $location.hash(loc);
+	}
+	$scope.gotoTop = function(location){
 		console.log("in gotoTop");
-		$location.hash('bottom');
+		var old = $location.hash()
+		$location.hash('home');
         $anchorScroll();
+        // $location.hash(old);
 	}
 	var y=$(this).scrollTop();
      console.log("in teseter" +y) 

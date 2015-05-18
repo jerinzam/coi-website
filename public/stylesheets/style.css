@@ -475,6 +475,7 @@ footer{
 
 /* designing courseSetails page */
 .courseDetailContainer{
+	margin-top: -6%;
  padding-top: 2%;
  padding-bottom: 2%;
  color:white;
@@ -768,7 +769,7 @@ background-color: white;
 
 
 /*==================================================
- * Effect 6
+ * Effect 6 
  * ===============================================*/
 .effect6
 {

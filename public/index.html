@@ -31,22 +31,22 @@
 
 
   	<!-- carousel -->
-  	<image-slider>
-  	<div class="container inside-slider">
-	  	<div>
-	  		<!-- <user-options>
-	  		</user-options> -->
-	  	</div>
-	</div>
+  	<image-slider ng-show = "detailshide" >
+	  	<div class="container inside-slider">
+		  	<div>
+		  		<!-- <user-options>
+		  		</user-options> -->
+		  	</div>
+		</div>
   	</image-slider>
 	<!-- end-carousel -->
 
-	<div id="bottom"></div>
-
-	<br><br><br>
+	<div id="home"></div>
+<br>
+	
 	<div class="container">
 		<div class=" course-set col-xs-offset-1  " ng-show = detailshide >
-
+			<br><br>
 			
 
 			<div class="row border-tria  " >
@@ -204,14 +204,14 @@
 		</div>
 	</div>
 
-	<div class=" container courseDetailContainer border-tria two-side-shadow " ng-show = !detailshide>
+	<div  id="courseDetail" class=" container courseDetailContainer border-tria two-side-shadow " ng-show = !detailshide>
 
-		<a href="" ng-click = "detailshider(true);gotoTop();" >
+		<a href="" ng-click = "detailshider(true);gotoTop('home');" >
 							<span class="glyphicon glyphicon-remove-circle pull-right"></span>
 		</a>
-		<div class="row ">
+		<div   class="row ">
 
-			<div class="col-sm-3 border-tria box-left">
+			<div  class="col-sm-3 border-tria box-left">
 				
 				<div class="col-xs-12 courseImg">
 					<img class="img-responsive " ng-src="./images/{{selectedCourse.coursePictureMain}}"/>
@@ -318,7 +318,7 @@
 		
 		</div>
 
-		<div class="courseDetailFooter effect6 ">
+		<div  class="courseDetailFooter effect6 ">
 			<div class="reviews border-tria col-sm-10">
 				<div class="row">
 				<div class="reviewer-info border-tria col-sm-9">
