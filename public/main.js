@@ -1,7 +1,7 @@
 
 
 
-angular.module("myApp",['ui.bootstrap.carousel','ngAnimate','imgSliderDirective','coursesDirective','ui.bootstrap'])
+angular.module("myApp",['ngSanitize', 'ui.select','ui.bootstrap.carousel','ngAnimate','imgSliderDirective','coursesDirective','ui.bootstrap'])
 .factory('mySharedService', function($rootScope) {
     // var sharedService = {};
     
@@ -318,7 +318,8 @@ angular.module("myApp",['ui.bootstrap.carousel','ngAnimate','imgSliderDirective'
 })
 
 .controller('mainctrl',function($scope,mySharedService,$window,$location,$anchorScroll,$interval){
-
+$scope.inputvalue = {};
+ 
 $scope.searcher = function(value){
 	$scope.inputvalue = [value];
 	$scope.searchValue = '';
@@ -365,7 +366,7 @@ $scope.slideChanger = function(type){
 			$scope.slider = ($scope.slider) % 3;	
 
 }
-
+$scope.categories = ['Java','Nodejs','Python']
 $scope.slidestarter = function(x){
 	
 	$scope.name= x;
@@ -376,8 +377,14 @@ $scope.slidestarter = function(x){
 
 	$scope.timer = $interval($scope.slideChanger,5000)
 }
+$scope.removeSelection = function(){
+	console.log($('.selectpicker'));
+	$('.selectpicker').selectpicker('deselectAll');
+    
+	// $scope.inputvalue = [];
+}
 $scope.gotoTop = function(location){
-	
+	// $scope.inputvalue = ['Python'];
 	console.log("in gotoTop"+$location.url());
 	$location.url('')
 	$location.hash(location);
@@ -430,4 +437,55 @@ $scope.dateValue = function(x,y){
         return !arrayFilter || arrayFilter.length == 0 || arrayFilter.indexOf(listItem[element]) != -1;
       });
     };
-  }); 
+  })
+.filter('propsFilter', function() {
+  return function(items, props) {
+    var out = [];
+
+    if (angular.isArray(items)) {
+      items.forEach(function(item) {
+        var itemMatches = false;
+
+        var keys = Object.keys(props);
+        for (var i = 0; i < keys.length; i++) {
+          var prop = keys[i];
+          var text = props[prop].toLowerCase();
+          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+            itemMatches = true;
+            break;
+          }
+        }
+
+        if (itemMatches) {
+          out.push(item);
+        }
+      });
+    } else {
+      // Let the output be the input untouched
+      out = items;
+    }
+
+    return out;
+  };
+})
+
+.controller('DemoCtrl', function($scope, $http, $timeout) {
+
+
+
+
+  $scope.counter = 0;
+  $scope.someFunction = function (item, model){
+    $scope.counter++;
+    $scope.eventResult = {item: item, model: model};
+  };
+ 
+  
+ 
+ 
+  
+
+
+ 
+
+});; 
