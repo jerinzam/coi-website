@@ -735,6 +735,7 @@ background-color: white;
 	-webkit-transition:all linear .5s;
      transition:all linear .5s;	
 }
+#coursetile{ cursor: pointer !important; }
 .repeat-item.ng-enter {
   -webkit-transition:.5s linear all;
   transition:.5s linear all;
@@ -814,6 +815,9 @@ background-color: white;
 	margin-left: 40%;
 }
 
+.btn {
+    pointer-events: auto;
+}
 
 /*==================================================
  * Effect 6 

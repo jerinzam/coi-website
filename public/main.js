@@ -317,11 +317,21 @@ angular.module("myApp",['ngSanitize', 'ui.select','ui.bootstrap.carousel','ngAni
 	}
 })
 
-.controller('mainctrl',function($scope,mySharedService,$window,$location,$anchorScroll,$interval){
+.controller('mainctrl',function(courses,$scope,mySharedService,$window,$location,$anchorScroll,$interval){
+$scope.categories = [];
 $scope.inputvalue = {};
+
+courses.list(function(data){
+				console.log("got all the courses");
+				console.log(data);
+				angular.forEach(data, function(item) {
+					console.log(item.courseName,":",$scope.categories)
+  $scope.categories.push(item.courseName);
+});
+			});
  
 $scope.searcher = function(value){
-	$scope.inputvalue = [value];
+	$scope.inputvalue.course = [value];
 	$scope.searchValue = '';
 	console.log("I am  in searcher",$scope.inputvalue )
 }
@@ -366,7 +376,8 @@ $scope.slideChanger = function(type){
 			$scope.slider = ($scope.slider) % 3;	
 
 }
-$scope.categories = ['Java','Nodejs','Python']
+
+
 $scope.slidestarter = function(x){
 	
 	$scope.name= x;
